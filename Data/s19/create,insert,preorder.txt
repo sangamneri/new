@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{ int data;
+struct node *left,*right;
+};
+struct node *create(struct node *root)
+{ struct node *
+nw=NULL,*ptr=NULL;
+int i,n;
+printf("\n how many values: ");
+scanf("%d",&n);
+printf("\nEnter Actual values: ");
+for(i=0;i<n;i++)
+{ nw=(struct node *)malloc(sizeof(struct node));
+scanf("%d",&nw->data);
+nw->left=nw->right=NULL;
+if(root==NULL)
+root=nw;
+else
+{ ptr=root;
+while(ptr!=NULL)
+{ if(nw->data< ptr->data)
+{ if(ptr->left==NULL)
+{ ptr->left=nw;
+break;
+} else
+ptr=ptr->left;
+} else if(nw->data>ptr->data)
+{ if(ptr->right==NULL)
+{ ptr->right=nw;
+break;
+} else
+ptr=ptr->right;
+}}}} return(root);
+} struct node *
+insert(struct node *root)
+{ struct node *
+nw=NULL,*ptr=NULL;
+printf("\nEnter the value to insert:");
+nw=(struct node *)malloc(sizeof(struct node));
+scanf("%d",&nw->data);
+nw->left=nw->right=NULL;
+if(root==NULL)
+root=nw;
+else
+{ ptr=root;
+while(ptr!=NULL)
+{ if(nw->data<ptr->data)
+{ if(ptr->left==NULL)
+{ ptr->left=nw;
+break;
+} else
+ptr=ptr->left;
+} else if(nw->data>ptr->data)
+{ if(ptr->right==NULL)
+{ ptr->right=nw;
+break;
+} else
+ptr=ptr->right;
+}}} return(root);
+} void preorder(struct node *root)
+{ struct node *ptr=NULL;
+ptr=root;
+if(ptr!=NULL)
+{ printf("%d\t",ptr->data);
+preorder(ptr->left);
+preorder(ptr->right);
+}} 
+void main()
+{ struct node *
+root=NULL;
+int ch,q=0,n,x;
+struct node *create();
+struct node *insert();
+void preorder();
+do
+{ printf("\n1.CREATE\n2.INSERT\n3.PREORDER\n4.EXIT");
+printf("\n Enter your choice: ");
+scanf("%d",&ch);
+switch(ch)
+{ case 1:root=create(root);
+break;
+case 2:root=insert(root);
+break;
+case 3:preorder(root);
+break;
+case 4:q=1;
+break;
+} }
+while(q==0);
+}

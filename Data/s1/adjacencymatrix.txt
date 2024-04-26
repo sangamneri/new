@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<stdlib.h>
+void main()
+{
+int a[10][10],i,j,n,x;
+printf("Enter the total vertices: ");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+for(j=0;j<n;j++)
+{
+if(i==j)
+a[i][j]=0;
+if(i!=j)
+{
+printf("Enter 1 if there is edge between %d and %d",i,j);
+scanf("%d",&x);
+if(x>=1)
+a[i][j]=1;
+else
+a[i][j]=0;
+}
+}
+}
+printf("The adjacency matrix is\n");
+for(i=0;i<n;i++)
+{
+for(j=0;j<n;j++)
+{
+printf("%d\t",a[i][j]);
+
+}
+printf("\n");
+}
+}

@@ -1,0 +1,141 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+int data;
+struct node *left,*right;
+};
+struct node *create(struct node *root)
+{
+struct node *nw=NULL,*ptr=NULL;
+int i,n;
+printf("enter how many elements");
+scanf("%d",&n);
+printf("enter actual elements");
+for(i=0;i<n;i++)
+{
+nw=(struct node *)malloc(sizeof(struct node));
+scanf("%d",&nw->data);
+nw->left=nw->right=NULL;
+if(root==NULL)
+root=nw;
+else
+{
+ptr=root;
+while(ptr!=NULL)
+{
+if(nw->data < ptr->data)
+{
+if(ptr->left==NULL)
+{
+ptr->left=nw;
+break;
+}
+else
+ptr=ptr->left;
+}
+else if(nw->data > ptr->data)
+{
+if(ptr->right==NULL)
+{
+ptr->right=nw;
+break;
+}
+else
+ptr=ptr->right;
+}
+}
+}
+}
+return(root);
+}
+
+int totalnode (struct node *root)
+{
+struct node *ptr=NULL;
+static int c=0;
+ptr=root;
+if(ptr==NULL)
+return 0;
+else
+{
+totalnode(ptr->left);
+c++;
+totalnode(ptr->right);
+}
+return c;
+}
+void inorder(struct node *root)
+{
+struct node *ptr=NULL;
+ptr=root;
+if(ptr!=NULL)
+{
+inorder(ptr->left);
+printf("%d\t",ptr->data);
+inorder(ptr->right);
+}
+}
+int countleaf(struct node *root)
+{
+static int l=0;
+if(root==NULL)
+return 0;
+else
+{
+countleaf(root->left);
+if(root->left==NULL && root->right==NULL)
+{
+l++;
+}
+countleaf(root->right);
+}
+return l;
+}
+int nonleaf(struct node *root)
+{
+static int n=0;
+if(root==NULL)
+return 0;
+if(root->left!=NULL ||  root->right!=NULL)
+{
+n++;
+}
+nonleaf(root->left);
+nonleaf(root->right);
+return n;
+}
+void main()
+{
+struct node *root=NULL;
+int ch,q=0,k,n,p;
+struct node *create();
+void inorder();
+int totalnode();
+int countleaf();
+int nonleaf();
+do
+{
+printf("\n1.create\n2.inorder\n3.totalnode\n4.countleaf\n5.nonleaf\n6.exit");
+printf("\nenter your choice==>");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:root=create(root);
+break;
+case 2:inorder(root);
+break;
+case 3:k=totalnode(root);
+printf("\n the total count of nodes %d",k);
+break;
+case 4:n=countleaf(root);
+printf("\n the total count of nodes %d",n);
+break;
+case 5:p=nonleaf(root);
+printf("\n the nonleaf of nodes are %d",p);
+break;
+case 11:q=1;
+break;
+}
+}while(q==0);
+}

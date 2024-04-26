@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define V 4 // Number of vertices in the graph
+#define INF 99999
+
+void printSolution(int dist[][V]);
+
+void floydWarshell(int graph[][V])
+{
+    int dist[V][V], i, j, k;
+
+    /* Initialize the solution matrix same as input graph matrix. Or
+    we can say the initial values of shortest distances are based
+    on shortest paths considering no intermediate vertex. */
+    for (i = 0; i < V; i++)
+        for (j = 0; j < V; j++)
+            dist[i][j] = graph[i][j];
+
+    for (k = 0; k < V; k++)
+    {
+        for (i = 0; i < V; i++)
+        {
+            for (j = 0; j < V; j++)
+            {
+                if (dist[i][j] > dist[i][k] + dist[k][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+            }
+        }
+    }
+
+    printSolution(dist);
+}
+
+void printSolution(int dist[][V])
+{
+    printf("Following matrix shows the shortest distances"
+            " between every pair of vertices \n");
+    int i, j;
+    for (i = 0; i < V; i++)
+    {
+        for (j = 0; j < V; j++)
+        {
+            if (dist[i][j] == INF)
+                printf("%7s", "INF");
+            else
+                printf("%7d", dist[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main(void)
+{
+    int n, i, j;
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+    int **graph = (int **)malloc((long unsigned) n * sizeof(int *));
+    for (i = 0; i < n; i++)
+    {
+        graph[i] = (int *)malloc((long unsigned) n * sizeof(int));
+    }
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            if (i == j)
+                graph[i][j] = 0;
+            else
+                graph[i][j] = 100;
+        }
+    }
+    printf("Enter the edges: \n");
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("[%d][%d]: ", i, j);
+            scanf("%d", &graph[i][j]);
+        }
+    }
+    printf("The original graph is:\n");
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%7d", graph[i][j]);
+        }
+        printf("\n");
+    }
+    floydWarshell(graph);
+    return 0;
+}
